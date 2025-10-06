@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "979112153791",
+    "project_id": "penoft-machine-test-6c073",
+    "storage_bucket": "penoft-machine-test-6c073.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979112153791:android:f33750d0d1fcefe5532c0a",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByOVdokDVf_Nlb8r5vRf11bcZYGiLYY6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
