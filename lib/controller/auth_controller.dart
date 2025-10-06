@@ -72,6 +72,9 @@ class AuthController extends GetxController {
     await prefs.remove('jwtToken');
     jwtToken.value = '';
     apiService.token = null;
+    otpController.clear();
+    signupEmailController.clear();
+    addFullNameController.clear();
     Get.offAll(SignupScreen());
   }
 
@@ -165,6 +168,7 @@ class AuthController extends GetxController {
     if (!canResend.value) return;
 
     try {
+      otpController.clear();
       isLoading.value = true;
 
       final data = await apiService.sendOtp(signupEmailController.text.trim());
@@ -282,6 +286,12 @@ class AuthController extends GetxController {
         color: Colors.green,
       );
       Get.offAll(() => AuthSuccessfullScreen());
+    } catch (e) {
+      snackBarWidget(
+        status: 'Error',
+        msg: e.toString().replaceAll('Exception: ', ''),
+        color: Colors.red,
+      );
     } finally {
       isLoading.value = false;
     }
