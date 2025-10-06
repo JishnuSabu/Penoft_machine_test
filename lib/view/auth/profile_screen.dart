@@ -32,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   sizedBoxH15,
                   cmBackWidget(),
-                  sizedBoxH35,
+                  sizedBoxH24,
                   Text(
                     "Your Profile",
                     style: TextStyle(
@@ -40,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                       fontSize: 18.sp,
                     ),
                   ),
-                  sizedBoxH10,
+                  sizedBoxH05,
                   Text(
                     "If needed you can change the details by clicking on them",
                     style: TextStyle(
@@ -49,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                       color: const Color(0xFF475569),
                     ),
                   ),
-                  sizedBoxH35,
+                  sizedBoxH24,
                   Text(
                     "Profile Picture",
                     style: TextStyle(
@@ -59,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   sizedBoxH05,
                   imagePickerWidget(authController),
-                  sizedBoxH18,
+                  sizedBoxH15,
                   Text(
                     "Full Name",
                     style: TextStyle(
@@ -81,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                       return null;
                     },
                   ),
-                  sizedBoxH18,
+                  sizedBoxH15,
                   Text(
                     "Mail Id",
                     style: TextStyle(
@@ -96,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                     readOnly: true,
                   ),
                   if (fromGoogle) ...[
-                    sizedBoxH18,
+                    sizedBoxH15,
                     Text(
                       "Phone Number",
                       style: TextStyle(
@@ -110,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                       hintText: "Ph No",
                     ),
                   ],
-                  sizedBoxH18,
+                  sizedBoxH15,
                   CustomElevatedButton(
                     text: "Continue",
                     onPressed: () async {

@@ -23,6 +23,8 @@ class AuthController extends GetxController {
   var otpController = TextEditingController();
 
   var isLoading = false.obs;
+  var isVerifyOtpLoading = false.obs;
+
   var resendTimer = 39.obs;
   var canResend = false.obs;
   var verificationType = "signup".obs;
@@ -103,16 +105,18 @@ class AuthController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
 
       await prefs.setString('signupEmail', email);
-
       signupEmail.value = email;
+
       final data = await apiService.sendOtp(signupEmail.value);
+
       snackBarWidget(
-        status: 'Success',
+        status: data['status'] ?? 'Success',
         msg: data['message'] ?? 'OTP sent successfully',
-        color: Colors.green,
+        color: data['status'] == 'error' ? Colors.red : Colors.green,
       );
 
       verificationType.value = data['type'] ?? 'signup';
+
       Get.to(() => VerificationCodeScreen());
     } catch (e) {
       snackBarWidget(
@@ -120,6 +124,8 @@ class AuthController extends GetxController {
         msg: e.toString().replaceAll('Exception: ', ''),
         color: Colors.red,
       );
+
+      Get.to(() => VerificationCodeScreen());
     } finally {
       isLoading.value = false;
     }
@@ -127,7 +133,7 @@ class AuthController extends GetxController {
 
   Future<void> verifyOtp(String otp) async {
     try {
-      isLoading.value = true;
+      isVerifyOtpLoading.value = true;
 
       final data = await apiService.verifyOtp(
         signupEmailController.text.trim(),
@@ -151,7 +157,7 @@ class AuthController extends GetxController {
         color: Colors.red,
       );
     } finally {
-      isLoading.value = false;
+      isVerifyOtpLoading.value = false;
     }
   }
 
@@ -281,14 +287,6 @@ class AuthController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    signupEmailController.dispose();
-    otpController.dispose();
-    _timer?.cancel();
-    super.onClose();
-  }
-
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
 
   Future<void> signInWithGoogle() async {
@@ -310,5 +308,13 @@ class AuthController extends GetxController {
         color: Colors.red,
       );
     }
+  }
+
+  @override
+  void onClose() {
+    otpController.clear();
+    signupEmailController.clear();
+    _timer?.cancel();
+    super.onClose();
   }
 }

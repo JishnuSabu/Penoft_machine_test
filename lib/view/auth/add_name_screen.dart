@@ -26,12 +26,12 @@ class AddNameScreen extends StatelessWidget {
             children: [
               sizedBoxH15,
               cmBackWidget(),
-              sizedBoxH35,
+              sizedBoxH24,
               Text(
                 "What's your name",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
               ),
-              sizedBoxH35,
+              sizedBoxH24,
               Text(
                 "Full Name",
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp),
@@ -52,7 +52,7 @@ class AddNameScreen extends StatelessWidget {
                 ),
               ),
 
-              sizedBoxH18,
+              sizedBoxH15,
               Obx(
                 () => CustomElevatedButton(
                   text: "Continue",

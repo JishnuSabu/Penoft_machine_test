@@ -12,6 +12,8 @@ class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
 
   final AuthController authController = Get.put(AuthController());
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,100 +21,122 @@ class SignupScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: screenWidth,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              sizedBoxH15,
-              cmBackWidget(),
-              sizedBoxH35,
-              Text(
-                "Enter your email",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.sp),
-              ),
-              sizedBoxH10,
-              Text(
-                "Enter your email to receive verification code",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14.sp,
-                  color: const Color(0xFF475569),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                sizedBoxH15,
+                cmBackWidget(),
+                sizedBoxH24,
+                Text(
+                  "Enter your email",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18.sp,
+                  ),
                 ),
-              ),
-              sizedBoxH35,
-              Text(
-                "Email",
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp),
-              ),
-              sizedBoxH05,
-              CmTextField(
-                controller: authController.signupEmailController,
-                hintText: "email",
-                prefixIcon: Icons.mail_outline,
-              ),
-              sizedBoxH18,
-              Obx(
-                () => CustomElevatedButton(
-                  text: "Continue",
-                  onPressed: () {
-                    authController.requestOtp();
+                sizedBoxH05,
+                Text(
+                  "Enter your email to receive verification code",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14.sp,
+                    color: const Color(0xFF475569),
+                  ),
+                ),
+                sizedBoxH24,
+                Text(
+                  "Email",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
+                ),
+                sizedBoxH05,
+                CmTextField(
+                  controller: authController.signupEmailController,
+                  hintText: "email",
+                  prefixIcon: Icons.mail_outline,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Email cannot be empty';
+                    }
+                    final emailRegex = RegExp(
+                      r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+                    );
+                    if (!emailRegex.hasMatch(value.trim())) {
+                      return 'Enter a valid email';
+                    }
+                    return null;
                   },
-                  isLoading: authController.isLoading.value,
                 ),
-              ),
-              sizedBoxH35,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.sp,
-                      color: const Color(0xFF64748B),
-                    ),
+                sizedBoxH15,
+                Obx(
+                  () => CustomElevatedButton(
+                    text: "Continue",
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        authController.requestOtp();
+                      }
+                    },
+                    isLoading: authController.isLoading.value,
                   ),
-                  Text(
-                    " Login",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.sp,
-                      color: const Color(0xFF9F54F8),
-                    ),
-                  ),
-                ],
-              ),
-              sizedBoxH35,
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: const Color(0xFFCBD5E1),
-                      thickness: 1,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Text(
-                      'OR',
+                ),
+                sizedBoxH24,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
                       style: TextStyle(
-                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.sp,
                         color: const Color(0xFF64748B),
-                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: const Color(0xFFCBD5E1),
-                      thickness: 1,
+                    Text(
+                      " Login",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.sp,
+                        color: const Color(0xFF9F54F8),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-
-              sizedBoxH35,
-              googleSigninButton(context),
-            ],
+                  ],
+                ),
+                sizedBoxH24,
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: const Color(0xFFCBD5E1),
+                        thickness: 1,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Text(
+                        'OR',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: const Color(0xFF64748B),
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: const Color(0xFFCBD5E1),
+                        thickness: 1,
+                      ),
+                    ),
+                  ],
+                ),
+                sizedBoxH24,
+                googleSigninButton(context),
+              ],
+            ),
           ),
         ),
       ),

@@ -16,10 +16,14 @@ class CartBottomSheet extends StatelessWidget {
       height: 288.93.w,
       width: 375.w,
       decoration: BoxDecoration(
-        color: Color(0xFFF5F3FF),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
+        ),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFFF7F1FF), Color(0xFFF6F0FF)],
         ),
       ),
       child: Column(
@@ -141,7 +145,9 @@ class CartBottomSheet extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: Color(0xFFFFFFFF),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.back();
+                  },
                   height: 44.w,
                   width: 157.w,
                 ),

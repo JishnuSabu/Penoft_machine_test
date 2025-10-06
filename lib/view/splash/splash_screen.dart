@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               splashCard(),
-              sizedBoxH24,
+              sizedBoxH18,
               const Text(
                 "educatory",
                 textAlign: TextAlign.center,
